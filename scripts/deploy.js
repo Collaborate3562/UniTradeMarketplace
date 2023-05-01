@@ -5,11 +5,11 @@ const hre = require("hardhat");
 async function main() {
   // Grab the contract factory 
 
-  const TestNFT = await ethers.getContractFactory("TestNFT");
-  const testNFT = await TestNFT.deploy();
-  await testNFT.deployed();
+  const UniTradeNFTMarketplace = await ethers.getContractFactory("UniTradeNFTMarketplace");
+  const uniTrade = await UniTradeNFTMarketplace.deploy();
+  await uniTrade.deployed();
 
-  console.log("TestNFT deployed to address::", testNFT.address);
+  console.log("UniTradeNFTMarketplace deployed to address::", testNFT.address);
 }
 
 main()
