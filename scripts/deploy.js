@@ -9,7 +9,7 @@ async function main() {
   const uniTrade = await UniTradeNFTMarketplace.deploy();
   await uniTrade.deployed();
 
-  console.log("UniTradeNFTMarketplace deployed to address::", testNFT.address);
+  console.log("UniTradeNFTMarketplace deployed to address::", uniTrade.address);
 }
 
 main()

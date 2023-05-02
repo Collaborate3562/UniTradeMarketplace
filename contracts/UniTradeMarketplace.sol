@@ -4,10 +4,9 @@ pragma solidity ^0.8.7;
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 import "@openzeppelin/contracts/token/ERC1155/IERC1155.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
 
-contract UniTradeNFTMarketplace is ReentrancyGuard {
-    address payable currentOwner;
-
+contract UniTradeNFTMarketplace is ReentrancyGuard, Ownable {
     bytes4 private constant ERC721_INTERFACE_ID = 0x80ac58cd;
     bytes4 private constant ERC1155_INTERFACE_ID = 0xd9b67a26;
     
@@ -58,9 +57,7 @@ contract UniTradeNFTMarketplace is ReentrancyGuard {
         _;
     }
 
-    constructor() {
-        currentOwner = payable(msg.sender);
-    }
+    constructor() {}
 
     struct MarketItem {
         bool exist;
@@ -368,6 +365,13 @@ contract UniTradeNFTMarketplace is ReentrancyGuard {
     ) external view returns (MarketItem memory) {
         MarketItem memory item = marketItems[_nftContract][_tokenId];
         return item;
+    }
+
+    /* Withdraw to the contract owner */
+    function withdraw() public onlyOwner {
+        uint256 amount = address(this).balance;
+        (bool success, ) = (msg.sender).call{value: amount}("");
+        require(success, "Transfer failed.");
     }
 
     function isERC721(address _address) public view returns (bool) {
