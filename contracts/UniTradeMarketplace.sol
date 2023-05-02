@@ -374,6 +374,10 @@ contract UniTradeNFTMarketplace is ReentrancyGuard, Ownable {
         require(success, "Transfer failed.");
     }
 
+    function getItemsList() external view returns (MarketItem[] memory) {
+        return itemsList;
+    }
+
     function isERC721(address _address) public view returns (bool) {
         return IERC721(_address).supportsInterface(ERC721_INTERFACE_ID);
     }
