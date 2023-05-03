@@ -281,7 +281,7 @@ contract UniTradeNFTMarketplace is ReentrancyGuard, Ownable {
             "This NFT doesn't exist!"
         );
         require(
-            marketItems[_nftContract][_tokenId].currentOwner != msg.sender,
+            marketItems[_nftContract][_tokenId].highestBidder != msg.sender,
             "You have already bidded."
         );
         require(
@@ -289,9 +289,11 @@ contract UniTradeNFTMarketplace is ReentrancyGuard, Ownable {
             "There already is a higher bid."
         );
 
-        marketItems[_nftContract][_tokenId].highestBidder.transfer(
-            marketItems[_nftContract][_tokenId].highestBidAmount
-        );
+        if (marketItems[_nftContract][_tokenId].highestBidder != marketItems[_nftContract][_tokenId].currentOwner) {
+            marketItems[_nftContract][_tokenId].highestBidder.transfer(
+                marketItems[_nftContract][_tokenId].highestBidAmount
+            );
+        }
 
         marketItems[_nftContract][_tokenId].highestBidder = payable(msg.sender);
         marketItems[_nftContract][_tokenId].highestBidAmount = msg.value;
