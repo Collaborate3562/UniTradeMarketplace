@@ -110,13 +110,15 @@ contract UniTradeNFTMarketplace is ReentrancyGuard, Ownable {
                 address(this),
                 tokenId
             );
-        } else {
+        }
+
+        if (isERC1155(nftContract)) {
             IERC1155(nftContract).safeTransferFrom(
                 msg.sender,
                 address(this),
                 tokenId,
                 1,
-                ""
+                "0x0"
             );
         }
 
@@ -238,13 +240,13 @@ contract UniTradeNFTMarketplace is ReentrancyGuard, Ownable {
 
         if (isERC721(_nftContract)) {
             IERC721(_nftContract).transferFrom(
-                marketItems[_nftContract][_tokenId].currentOwner,
+                address(this),
                 msg.sender,
                 _tokenId
             );
         } else {
             IERC1155(_nftContract).safeTransferFrom(
-                marketItems[_nftContract][_tokenId].currentOwner,
+                address(this),
                 msg.sender,
                 _tokenId,
                 1,
@@ -372,6 +374,10 @@ contract UniTradeNFTMarketplace is ReentrancyGuard, Ownable {
         uint256 amount = address(this).balance;
         (bool success, ) = (msg.sender).call{value: amount}("");
         require(success, "Transfer failed.");
+    }
+
+    function getNow() external view returns (uint256) {
+        return block.timestamp;
     }
 
     function getItemsList() external view returns (MarketItem[] memory) {
