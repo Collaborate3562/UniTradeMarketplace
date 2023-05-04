@@ -9,7 +9,7 @@ const { PRIVATE_KEY, INFURA_ID } = process.env;
 let hardhatConfig = {}
 
 module.exports = {
-   defaultNetwork: "goerli",
+   defaultNetwork: "hardhat",
    networks: {
       hardhat: hardhatConfig,
       goerli: {

@@ -4,9 +4,10 @@ pragma solidity ^0.8.7;
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 import "@openzeppelin/contracts/token/ERC1155/IERC1155.sol";
+import "@openzeppelin/contracts/token/ERC1155/utils/ERC1155Holder.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
-contract UniTradeNFTMarketplace is ReentrancyGuard, Ownable {
+contract UniTradeNFTMarketplace is ERC1155Holder, ReentrancyGuard, Ownable {
     bytes4 private constant ERC721_INTERFACE_ID = 0x80ac58cd;
     bytes4 private constant ERC1155_INTERFACE_ID = 0xd9b67a26;
     
@@ -113,11 +114,12 @@ contract UniTradeNFTMarketplace is ReentrancyGuard, Ownable {
         }
 
         if (isERC1155(nftContract)) {
+            uint256 amount = 1;
             IERC1155(nftContract).safeTransferFrom(
                 msg.sender,
                 address(this),
                 tokenId,
-                1,
+                amount,
                 "0x0"
             );
         }
