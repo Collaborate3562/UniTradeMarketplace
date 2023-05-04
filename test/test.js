@@ -16,6 +16,9 @@ describe("Marketplace Listing", function () {
     await hardhatNFT.connect(addr1).setApprovalForAll(hardhatMarketplace.address,true)
     const isErc1155 = await hardhatMarketplace.connect(addr1).isERC1155(tokenAddr);
     await hardhatMarketplace.connect(addr1).itemOnMarket(tokenAddr, 1, ethers.utils.parseEther("0.1"), "forAuction", 2);
+    
+    // await hardhatMarketplace.connect(addr1).auctionEnd(tokenAddr, 1);
+    // await hardhatMarketplace.connect(addr1).itemDownMarket(tokenAddr, 1);
   });
 
 //   it("Create list and cancel", async function () {

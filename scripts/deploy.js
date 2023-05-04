@@ -5,7 +5,7 @@ const hre = require("hardhat");
 async function main() {
   // Grab the contract factory 
 
-  const UniTradeNFTMarketplace = await ethers.getContractFactory("UniTradeNFTMarketplace");
+  const UniTradeNFTMarketplace = await ethers.getContractFactory("UniTrade1155");
   const uniTrade = await UniTradeNFTMarketplace.deploy();
   await uniTrade.deployed();
 

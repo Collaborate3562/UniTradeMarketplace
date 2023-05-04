@@ -177,7 +177,7 @@ contract UniTradeNFTMarketplace is ERC1155Holder, ReentrancyGuard, Ownable {
                 msg.sender,
                 _tokenId,
                 1,
-                ""
+                "0x0"
             );
         }
 
@@ -252,7 +252,7 @@ contract UniTradeNFTMarketplace is ERC1155Holder, ReentrancyGuard, Ownable {
                 msg.sender,
                 _tokenId,
                 1,
-                ""
+                "0x0"
             );
         }
 
@@ -308,10 +308,6 @@ contract UniTradeNFTMarketplace is ERC1155Holder, ReentrancyGuard, Ownable {
     and transfer the item to the highest bidder */
     function auctionEnd(address _nftContract, uint256 _tokenId) external onlyNFTContract(_nftContract) {
         require(
-            block.timestamp >= marketItems[_nftContract][_tokenId].expiresAt,
-            "Auction not yet ended."
-        );
-        require(
             keccak256(
                 abi.encodePacked((marketItems[_nftContract][_tokenId].status))
             ) != keccak256(abi.encodePacked(("down"))),
@@ -345,7 +341,7 @@ contract UniTradeNFTMarketplace is ERC1155Holder, ReentrancyGuard, Ownable {
                 marketItems[_nftContract][_tokenId].highestBidder,
                 _tokenId,
                 1,
-                ""
+                "0x0"
             );
         }
 
